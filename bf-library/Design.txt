@@ -1,0 +1,38 @@
+
+
+Navbar
+   Nav show JSON
+   Nav backup
+   Nav Previous
+   Nav Next
+   
+Sidebar
+   Button collapse tree
+   Button Expand Tree
+   Button New Series
+   tree
+   	Series
+   		Audios
+   			Delete
+   			Add
+Main
+   JSON Display
+   Show Audio
+   	Edit Checkbox
+   	Audio
+   		Title
+   		Image = Linked to BF
+   		
+   		Doctor from Sprite
+   		
+   		Featuring from Sprite
+   		
+   		Series
+   		Number in Series
+   		Release Date
+   		Image entry
+   		BF Url entry
+   		Server Path
+   		Select : None, 1 File, Chapters
+   		Chapters Display/Edit in text area
+   		Filename Entry
