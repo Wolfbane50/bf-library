@@ -1,8 +1,20 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { UserIsAuthenticated, UserIsNotAuthenticated } from "./helpers/auth";
+
+import { Provider } from "react-redux";
+import store from "./store";
+
+import AppNavbar from "./components/layout/AppNavbar";
+import Dashboard from "./components/layout/Dashboard";
+import AddClient from "./components/clients/AddClient";
+import EditClient from "./components/clients/EditClient";
+import ClientDetails from "./components/clients/ClientDetails";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
+import Settings from "./components/settings/Settings";
 import "./App.css";
-import Header from "./components/Header";
-import Episode from "./components/Episode";
 
 function App() {
   const selItem = {
