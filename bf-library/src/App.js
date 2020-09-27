@@ -4,13 +4,14 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { UserIsAuthenticated, UserIsNotAuthenticated } from "./helpers/auth";
 
 import { Provider } from "react-redux";
-import store from "./store";
+import { ReactReduxFirebaseProvider } from "react-redux-firebase";
+import { store, rrfProps } from "./store";
 
 import AppNavbar from "./components/layout/AppNavbar";
 import Dashboard from "./components/layout/Dashboard";
-import AddClient from "./components/clients/AddClient";
-import EditClient from "./components/clients/EditClient";
-import ClientDetails from "./components/clients/ClientDetails";
+import AddClient from "./components/episodes/AddEpisode";
+import EditClient from "./components/episodes/EditEpisode";
+import ClientDetails from "./components/episodes/EpisodeDetails";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Settings from "./components/settings/Settings";
@@ -44,10 +45,54 @@ function App() {
       "https://www.bigfinish.com/releases/v/the-paternoster-gang-heritage-3-1985",
   };
   return (
-    <div className="App">
-      <Header branding="Big Finish Audio Library" />
-      <Episode ep={selItem} />
-    </div>
+    <Provider store={store}>
+      <ReactReduxFirebaseProvider {...rrfProps}>
+        <Router>
+          <div className="App">
+            <AppNavbar />
+            <div className="container">
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  component={UserIsAuthenticated(Dashboard)}
+                />
+                <Route
+                  exact
+                  path="/episode/add"
+                  component={UserIsAuthenticated(AddClient)}
+                />
+                <Route
+                  exact
+                  path="/episode/edit/:id"
+                  component={UserIsAuthenticated(EditClient)}
+                />
+                <Route
+                  exact
+                  path="/episode/:id"
+                  component={UserIsAuthenticated(ClientDetails)}
+                />
+                <Route
+                  exact
+                  path="/login"
+                  component={UserIsNotAuthenticated(Login)}
+                />
+                <Route
+                  exact
+                  path="/register"
+                  component={UserIsNotAuthenticated(Register)}
+                />
+                <Route
+                  exact
+                  path="/settings"
+                  component={UserIsAuthenticated(Settings)}
+                />
+              </Switch>
+            </div>
+          </div>
+        </Router>
+      </ReactReduxFirebaseProvider>
+    </Provider>
   );
 }
 
