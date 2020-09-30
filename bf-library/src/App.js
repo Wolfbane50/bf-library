@@ -15,6 +15,8 @@ import ClientDetails from "./components/episodes/EpisodeDetails";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Settings from "./components/settings/Settings";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 function App() {

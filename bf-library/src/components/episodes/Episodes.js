@@ -12,13 +12,16 @@ class Episodes extends Component {
     const { episodes } = this.props;
 
     if (episodes) {
+      let sortedEps = episodes
+        .slice()
+        .sort((a, b) => a.Title.localeCompare(b.Title));
       return (
         <div>
           <div className="row">
             <div className="col-md-6">
               <h2>
                 {" "}
-                <i className="fas fa-users" /> Episodes{" "}
+                <i className="fas fa-file-audio" /> Episodes{" "}
               </h2>
             </div>
             <div className="col-md-6">
@@ -29,15 +32,18 @@ class Episodes extends Component {
           <table className="table table-striped">
             <thead className="thead-inverse">
               <tr>
-                <th>Series</th>
+                <th>#</th>
                 <th>Episode</th>
+                <th>Series</th>
                 <th>Doctor</th>
+                <th />
                 <th />
               </tr>
             </thead>
             <tbody>
-              {episodes.map((episode) => (
+              {sortedEps.map((episode) => (
                 <tr key={episode.id}>
+                  <td>{episode.Number}</td>
                   <td>{episode.Title}</td>
                   <td>{episode.Series}</td>
                   <td>{episode.Doctor}</td>

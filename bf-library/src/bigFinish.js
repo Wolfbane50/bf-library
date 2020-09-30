@@ -1,36 +1,6 @@
 export const myEpisodes = [
   {
-    Doctor: "5th, 6th, 7th",
-    Fname: "001 - The Sirens of Time.mp3",
-    Series_Sorted: "7Z",
-    Doctor_Actor: "P. Davisson, C. Baker, S. McCoy",
-    Released: "1999-07-01T00:00:00.000Z",
-    Series: "DWMonthly",
-    Title: "Sirens of Time",
-    Number: 1,
-    id: 1,
-    SPath: "Audio Dramas/Doctor Who - Big Finish/DrWhoMonthly",
-    Image:
-      "https://www.bigfinish.com/img/release/dwmr001_thesirensoftime_1417_cover_medium.jpg",
-    bfUrl: "https://www.bigfinish.com/releases/v/the-sirens-of-time-619",
-  },
-  {
-    Doctor: "5th",
-    Fname: "002 - Phantasmagoria.mp3",
-    Series_Sorted: "6PA",
-    Featuring: "Turlough",
-    Doctor_Actor: "P. Davisson",
-    Released: "1999-10-01T00:00:00.000Z",
-    Series: "DWMonthly",
-    Title: "Phantasmagoria",
-    Number: 2,
-    id: 2,
-    SPath: "Audio Dramas/Doctor Who - Big Finish/DrWhoMonthly",
-    Image:
-      "https://www.bigfinish.com/img/release/dwmr002_phantasmagoria_1417_cover_medium.jpg",
-    bfUrl: "https://www.bigfinish.com/releases/v/phantasmagoria-620",
-  },
-  {
+ 
     Doctor: "6th",
     Fname: "003 - Whispers of Terror.mp3",
     Series_Sorted: "6ZA",
