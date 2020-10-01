@@ -31,6 +31,9 @@ class AddEpisode extends Component {
     //   .then(() => history.push("/"))
     //   .catch((error) => console.error("Error writing document: ", error));
     newEpisodes.forEach((ep) => {
+      if (ep.id) {
+        delete ep.id;
+      }
       firestore
         .add({ collection: "bfEpisodes" }, ep)
         .then(() => history.push("/"))
@@ -67,7 +70,7 @@ class AddEpisode extends Component {
             </h2>
           </div>
           <div className="col-md-3">
-            <Button variant="danger" onClick={this.onSubmit()}>
+            <Button variant="danger" onClick={this.onSubmit}>
               Add All to Database
             </Button>
           </div>

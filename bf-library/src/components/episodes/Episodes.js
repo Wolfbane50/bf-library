@@ -1,20 +1,31 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import Button from "react-bootstrap/Button";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import Spinner from "../layout/Spinner";
 
 class Episodes extends Component {
+  onDeleteClick = (id) => {
+    const { firestore, history } = this.props;
+    if (window.confirm("Are you sure you want to delete this episode?")) {
+      console.log("Deleting " + id);
+      firestore
+        .delete({ collection: "bfEpisodes", doc: id })
+        .then(history.push("/"));
+    }
+  };
+
   render() {
     // return <div>Episodes go here!</div>;
     const { episodes } = this.props;
 
     if (episodes) {
-      let sortedEps = episodes
-        .slice()
-        .sort((a, b) => a.Title.localeCompare(b.Title));
+      //        .sort((a, b) => a.Title.localeCompare(b.Title));
+      let sortedEps = episodes.slice().sort((a, b) => a.Number - b.Number);
+
       return (
         <div>
           <div className="row">
@@ -25,7 +36,9 @@ class Episodes extends Component {
               </h2>
             </div>
             <div className="col-md-6">
-              <h5 className="text-right text-secondary">Total Owed</h5>
+              <h5 className="text-right text-secondary">
+                Total Episodes: {sortedEps.length}{" "}
+              </h5>
             </div>
           </div>
 
@@ -54,6 +67,16 @@ class Episodes extends Component {
                     >
                       <i className="fas fa-arrow-circle-right" /> Details
                     </Link>
+                  </td>
+                  <td>
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        this.onDeleteClick(episode.id);
+                      }}
+                    >
+                      Delete
+                    </Button>
                   </td>
                 </tr>
               ))}
