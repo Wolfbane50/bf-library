@@ -24,7 +24,11 @@ class Episodes extends Component {
 
     if (episodes) {
       //        .sort((a, b) => a.Title.localeCompare(b.Title));
-      let sortedEps = episodes.slice().sort((a, b) => a.Number - b.Number);
+      // let sortedEps = episodes.slice().sort((a, b) => a.Number - b.
+
+      let sortedEps = episodes
+        .slice()
+        .sort((a, b) => new Date(a.Released) - new Date(b.Released));
 
       return (
         <div>
@@ -46,6 +50,7 @@ class Episodes extends Component {
             <thead className="thead-inverse">
               <tr>
                 <th>#</th>
+                <th>Released</th>
                 <th>Episode</th>
                 <th>Series</th>
                 <th>Doctor</th>
@@ -57,6 +62,7 @@ class Episodes extends Component {
               {sortedEps.map((episode) => (
                 <tr key={episode.id}>
                   <td>{episode.Number}</td>
+                  <td>{new Date(episode.Released).toDateString().substr(4)}</td>
                   <td>{episode.Title}</td>
                   <td>{episode.Series}</td>
                   <td>{episode.Doctor}</td>

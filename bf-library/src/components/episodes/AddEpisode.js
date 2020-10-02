@@ -1,139 +1,177 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Accordion from "react-bootstrap/Accordion";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
-import { myEpisodes } from "../../bigFinish";
 
 class AddEpisode extends Component {
-  gotIt = (episode) => {
-    return episode.Fname || episode.Chapters;
+  state = {
+    Number: "",
+    Title: "",
+    Series: "",
+    Doctor: "",
+    Featuring: "",
+    Released: new Date().toString(),
+    Image: "",
+    bfUrl: "",
+    SPath: "",
+    Fname: "", // ToDo: Add Chapters
   };
 
-  onSubmit = async function () {
-    //e.preventDefault();
+  onSubmit = (e) => {
+    e.preventDefault();
+
+    const newEpisode = this.state;
 
     const { firestore, history } = this.props;
-    const newEpisodes = myEpisodes.slice(0, 10);
-    const batch = firestore.batch();
 
-    // await newEpisodes.map(async (item) => {
-    //   const collectionRef = await firestore.collection("bfEpisodes").doc();
-    //   batch.create(collectionRef, item);
-    // });
-
-    // batch
-    //   .commit()
-    //   .then(() => history.push("/"))
-    //   .catch((error) => console.error("Error writing document: ", error));
-    newEpisodes.forEach((ep) => {
-      if (ep.id) {
-        delete ep.id;
-      }
-      firestore
-        .add({ collection: "bfEpisodes" }, ep)
-        .then(() => history.push("/"))
-        .catch((error) => console.error("Error writing document: ", error));
-    });
+    firestore
+      .add({ collection: "bfEpisodes" }, newEpisode)
+      .then(() => history.push("/"));
   };
 
+  onChange = (e) => this.setState({ [e.target.name]: e.target.value });
   render() {
-    const allSeries = Object.keys(
-      myEpisodes.reduce(
-        (series, ep) => {
-          const { Series } = ep;
-          series[Series] = 1;
-          return series;
-        },
-        { blah: 1 }
-      )
-    );
-
-    const seriesSets = allSeries.map((name) => {
-      //console.log("Filtering " + name);
-      return myEpisodes.filter((ep) => ep.Series === name);
-    });
-
-    //const monthlies = myEpisodes.filter((ep) => ep.Series === "DWMonthly");
-    //const shortTrips = myEpisodes.filter((ep) => ep.Series === "ShortTrips");
     return (
       <div>
         <div className="row">
           <div className="col-md-6">
-            <h2>
-              {" "}
-              <i className="fas fa-file-audio" /> Episodes{" "}
-            </h2>
-          </div>
-          <div className="col-md-3">
-            <Button variant="danger" onClick={this.onSubmit}>
-              Add All to Database
-            </Button>
+            <Link to="/" className="btn btn-link">
+              <i className="fas fa-arrow-circle-left" /> Back To Dashboard
+            </Link>
           </div>
         </div>
-        <hr />
-        <Accordion>
-          {seriesSets.map((mySet, index) => (
-            <Card key={index}>
-              <Accordion.Toggle
-                as={Card.Header}
-                variant="link"
-                eventKey={index}
-                style={{ cursor: "pointer" }}
-              >
-                {allSeries[index]}
-              </Accordion.Toggle>
-              <Accordion.Collapse eventKey={index}>
-                <Card.Body>
-                  <table className="table table-striped">
-                    <thead className="thead-inverse">
-                      <tr>
-                        <th>#</th>
-                        <th>Episode</th>
-                        <th>Doctor</th>
-                        <th />
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {mySet.map((episode, innerIndex) => (
-                        <tr key={(index + 1) * (innerIndex + 1)}>
-                          <td>{episode.Number}</td>
-                          <td>{episode.Title}</td>
-                          <td>{episode.Doctor}</td>
-                          <td>
-                            {this.gotIt(episode) ? (
-                              <i className="fas fa-check-circle" />
-                            ) : (
-                              <i className="fab fa-circle" />
-                            )}
-                          </td>
-                          <td>
-                            <Link
-                              to={`/episode/${episode.id}`}
-                              className="btn btn-secondary btn-sm"
-                            >
-                              <i className="fas fa-arrow-circle-right" />{" "}
-                              Details
-                            </Link>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </Card.Body>
-              </Accordion.Collapse>
-            </Card>
-          ))}
-        </Accordion>{" "}
+
+        <div className="card">
+          <div className="card-header">Add Episode</div>
+          <div className="card-body">
+            <form onSubmit={this.onSubmit}>
+              <div className="form-group">
+                <label htmlFor="Number">Number</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="Number"
+                  minLength="1"
+                  required
+                  onChange={this.onChange}
+                  value={this.state.Number}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="Title">Title</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="Title"
+                  minLength="2"
+                  required
+                  onChange={this.onChange}
+                  value={this.state.Title}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="Series">Series</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="Series"
+                  onChange={this.onChange}
+                  value={this.state.Series}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="Doctor">Doctor(s) or Lead</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="Doctor"
+                  minLength="3"
+                  required
+                  onChange={this.onChange}
+                  value={this.state.Doctor}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="Featuring">
+                  Companions and Enemies (comma delimited)
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="Featuring"
+                  onChange={this.onChange}
+                  value={this.state.Featuring}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="Released">Release Date:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="Released"
+                  onChange={this.onChange}
+                  value={this.state.Released}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="Image">Episode Image URL</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="Image"
+                  onChange={this.onChange}
+                  value={this.state.Image}
+                />
+              </div>
+              <span>Sample Image here !</span>
+              <div className="form-group">
+                <label htmlFor="bfUrl">Big Finish Link</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="bfUrl"
+                  onChange={this.onChange}
+                  value={this.state.bfUrl}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="SPath">Path on Server</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="SPath"
+                  onChange={this.onChange}
+                  value={this.state.SPath}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="Fname">Audio File</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="Fname"
+                  onChange={this.onChange}
+                  value={this.state.Fname}
+                />
+              </div>
+              <input
+                type="submit"
+                value="Submit"
+                className="btn btn-primary btn-block"
+              />
+            </form>
+          </div>
+        </div>
       </div>
     );
   }
 }
-
 AddEpisode.propTypes = {
   firestore: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,

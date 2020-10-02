@@ -15,6 +15,7 @@
     "react-redux-firebase": "^3.7.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-widgets": "^5.0.0-beta.21",
     "redux": "^4.0.5",
     "redux-auth-wrapper": "^3.0.0",
     "redux-firestore": "^0.13.0"

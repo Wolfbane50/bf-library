@@ -9,9 +9,10 @@ import { store, rrfProps } from "./store";
 
 import AppNavbar from "./components/layout/AppNavbar";
 import Dashboard from "./components/layout/Dashboard";
-import AddClient from "./components/episodes/AddEpisode";
-import EditClient from "./components/episodes/EditEpisode";
-import ClientDetails from "./components/episodes/EpisodeDetails";
+import MigrateEpisode from "./components/episodes/MigrateEpisode";
+import AddEpisode from "./components/episodes/AddEpisode";
+import EditEpisode from "./components/episodes/EditEpisode";
+import EpisodeDetails from "./components/episodes/EpisodeDetails";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Settings from "./components/settings/Settings";
@@ -20,32 +21,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 function App() {
-  const selItem = {
-    Title: "Truth and Bone",
-    Doctor: "None",
-    Series: "Paternoster Gang ",
-    id: "paternoster3-3",
-    Featuring: "Vastra, Strax",
-    Number: "3.3",
-    Released: "2020-05-05T05:00:00.000Z",
-    SPath:
-      "Audio Dramas/Doctor Who - Big Finish/Paternoster Gang/303 Truth and Bone",
-    Chapters: [
-      "01 - Truth and Bone 01.mp3",
-      "02 - Truth and Bone 02.mp3",
-      "03 - Truth and Bone 03.mp3",
-      "04 - Truth and Bone 04.mp3",
-      "05 - Truth and Bone 05.mp3",
-      "06 - Truth and Bone 06.mp3",
-      "07 - Truth and Bone 07.mp3",
-      "08 - Truth and Bone 08.mp3",
-      "09 - Truth and Bone 09.mp3",
-      "10 - Truth and Bone Credits.mp3",
-    ],
-    Image: "https://www.bigfinish.com/image/release/1985/medium.jpg",
-    bfUrl:
-      "https://www.bigfinish.com/releases/v/the-paternoster-gang-heritage-3-1985",
-  };
   return (
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
@@ -61,18 +36,23 @@ function App() {
                 />
                 <Route
                   exact
+                  path="/episode/migrate"
+                  component={UserIsAuthenticated(MigrateEpisode)}
+                />
+                <Route
+                  exact
                   path="/episode/add"
-                  component={UserIsAuthenticated(AddClient)}
+                  component={UserIsAuthenticated(AddEpisode)}
                 />
                 <Route
                   exact
                   path="/episode/edit/:id"
-                  component={UserIsAuthenticated(EditClient)}
+                  component={UserIsAuthenticated(EditEpisode)}
                 />
                 <Route
                   exact
                   path="/episode/:id"
-                  component={UserIsAuthenticated(ClientDetails)}
+                  component={UserIsAuthenticated(EpisodeDetails)}
                 />
                 <Route
                   exact
