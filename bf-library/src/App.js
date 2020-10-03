@@ -18,6 +18,7 @@ import Register from "./components/auth/Register";
 import Settings from "./components/settings/Settings";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-widgets/dist/css/react-widgets.css";
 import "./App.css";
 
 function App() {
